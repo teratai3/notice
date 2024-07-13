@@ -1,0 +1,10 @@
+notice.index:
+  title: '管理者お知らせ一覧'
+  description: '管理者お知らせページ'
+  route_name: entity.notice.collection
+  weight: 1
+  parent: system.admin
+  options:
+    attributes:
+      class:
+        - 'toolbar-icon-entity-user-collection'

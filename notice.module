@@ -1,0 +1,67 @@
+<?php
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\notice\Entity\Notice;
+use Drupal\Core\Datetime\DrupalDateTime;
+
+/**
+ * Implements hook_help().
+ */
+function notice_help($route_name, RouteMatchInterface $route_match)
+{
+    $notices = _get_notices();
+    if (\Drupal::service('router.admin_context')->isAdminRoute() && !empty($notices)) {
+        $notice_my_module = "";
+
+        foreach ($notices as $notice) {
+
+            // クッキーが設定されている場合、この通知をスキップ
+            if (isset($_COOKIE['notice_closed_' . $notice->id()])) continue;
+
+            $notice_my_module .= '<div class="notice_my_module">';
+            $notice_my_module .= '<p class="notice_my_module_ttl">' . $notice->get('title')->value . '</p>';
+            $notice_my_module .= '<p class="notice_my_module_description">' . $notice->get('description')->value . '</p>';
+            $notice_my_module .= '<a href="#" class="notice_my_module_close" data-id="' . $notice->get('id')->value . '">✖</a>';
+            $notice_my_module .= '</div>';
+        }
+        return $notice_my_module;
+    }
+}
+
+
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function notice_page_attachments_alter(array &$attachments)
+{
+    if (\Drupal::service('router.admin_context')->isAdminRoute()) {
+        $attachments['#attached']['library'][] = 'notice/admin_notice';
+    }
+}
+
+
+
+/**
+ * フックではない関数を定義する
+ */
+function _get_notices()
+{
+    $current_time = \Drupal::time()->getRequestTime();
+    $current_date = DrupalDateTime::createFromTimestamp($current_time)->format('Y-m-d\TH:i:s');
+
+    // ログイン中のユーザーのロールを取得
+    $current_user = \Drupal::currentUser();
+    $user_roles = $current_user->getRoles();
+
+
+    $query = \Drupal::entityQuery('notice')
+        ->accessCheck(true)->sort('id', 'DESC')
+        ->condition('start_date', $current_date, '<=')
+        ->condition('end_date', $current_date, '>=')
+        ->condition('user_roles', $user_roles, 'IN');
+
+    $ids = $query->execute();
+    $nodes = Notice::loadMultiple($ids);
+    return $nodes;
+}

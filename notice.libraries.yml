@@ -1,0 +1,6 @@
+admin_notice:
+  css:
+    theme:
+      css/notice.css: {}
+  js:
+    js/notice.js: {}

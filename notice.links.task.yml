@@ -1,0 +1,17 @@
+notice.view:
+  route_name: entity.notice.canonical
+  title: 'View'
+  base_route: entity.notice.canonical
+  weight: 0
+
+notice.edit:
+  route_name: entity.notice.edit_form
+  title: 'Edit'
+  base_route: entity.notice.canonical
+  weight: 10
+
+notice.delete:
+  route_name: entity.notice.delete_form
+  title: 'Delete'
+  base_route: entity.notice.canonical
+  weight: 20

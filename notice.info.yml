@@ -1,0 +1,5 @@
+name: 'notice'
+type: module
+description: '管理画面にお知らせ追加します'
+package: Custom
+core_version_requirement: ^10 || ^11

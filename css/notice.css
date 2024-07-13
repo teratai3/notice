@@ -1,0 +1,38 @@
+.notice_my_module {
+    border-left: 5px solid #003ecc;
+    background: #f3f4f9;
+    padding: 10px;
+    padding-right: 30px;
+    margin: 10px 0;
+    font-weight: bold;
+    position: relative;
+}
+
+.notice_my_module .notice_my_module_ttl {
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+.notice_my_module .notice_my_module_description {
+    font-size: 12px;
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+.notice_my_module .notice_my_module_close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #000;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+.notice_my_module .notice_my_module_close:hover{
+    opacity: 0.6;
+}
